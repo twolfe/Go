@@ -362,12 +362,12 @@ func main() {
 	})
 	for _, k := range keys {
 		if dataFocal[k].Effect == variant {
-			fmt.Printf("%d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d gene[%s] pos[%d]\n",
+			fmt.Printf("%d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d \n",
 				dataFocal[k].NumA, dataFocal[k].NumC, dataFocal[k].NumG, dataFocal[k].NumT,
 				dataAncestral1[k].NumA, dataAncestral1[k].NumC, dataAncestral1[k].NumG, dataAncestral1[k].NumT,
 				dataAncestral2[k].NumA, dataAncestral2[k].NumC, dataAncestral2[k].NumG, dataAncestral2[k].NumT,
-				dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT,
-				k.Gene, k.Pos)
+				dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT)
+				//k.Gene, k.Pos)
 			//fmt.Printf("gene[%s] pos[%d]\n", k.Gene, k.Pos)
 		}
 	}
