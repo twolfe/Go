@@ -334,4 +334,15 @@ func main() {
 			dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT)
 	}
 	//Format so that SNPs are in order.
+	/*
+	var m map[int]string
+	var keys []int
+	for k := range m {
+	    keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	for _, k := range keys {
+	    fmt.Println("Key:", k, "Value:", m[k])
+	}
+	*/
 }
