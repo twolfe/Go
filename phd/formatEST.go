@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sort"
+	"flag"
 	//"text/tabwriter"
 	//"phd/polymorphism"
 	//"github.com/biogo/boom"
@@ -302,11 +303,18 @@ func PopulateReference(f *os.File, d Data) Data {
 }
 
 func main() {
+	fPtr := flag.String("f", "nothing", "file containing focal SNPs; no missing data")
+	a1Ptr := flag.String("a1", "nothing", "file containing outgroup 1 SNPs; all data for that outgroup must be present")
+	a2Ptr := flag.String("a2", "nothing", "file containing outgroup 2 SNPs; all data for that outgroup must be present")
+	a3Ptr := flag.String("a3", "nothing", "file containing outgroup 3 SNPs; all data must be present")
+	typePtr := flag.String("type", "synonymous_variant", "what type of SNP are you interested in? (eg. missense_variant)")
+	variant := *typePtr
+	flag.Parse()
 
-	fileFocal, _ := os.Open(os.Args[1]) // focal allele
-	fileAncestral1, _ := os.Open(os.Args[2]) // ancestral 1 allele
-	fileAncestral2, _ := os.Open(os.Args[3]) // ancestral 1 allele
-	fileAncestralRef, _ := os.Open(os.Args[4]) // ancestral allele
+	fileFocal, _ := os.Open(*fPtr) // focal allele
+	fileAncestral1, _ := os.Open(*a1Ptr) // ancestral 1 allele
+	fileAncestral2, _ := os.Open(*a2Ptr) // ancestral 2 allele
+	fileAncestralRef, _ := os.Open(*a3Ptr) // ancestral allele
 
 	dataFocal := make(Data)
 	dataAncestral1 := make(Data)
@@ -322,27 +330,45 @@ func main() {
 	fileAncestral1.Close()
 	fileAncestral2.Close()
 	fileAncestralRef.Close()
+
+
+	//fileAncestralRef.Close()
 	//fileChange.Close()
 	/*for k, v := range dataAncestralRef {
     fmt.Printf("key[%s] value[%s]\n", k, v)
 	}*/
 
-	for k, v := range dataFocal {
+	/*for k, v := range dataFocal {
 		fmt.Printf("%d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d \n", v.NumA, v.NumC, v.NumG, v.NumT,
 			dataAncestral1[k].NumA, dataAncestral1[k].NumC, dataAncestral1[k].NumG, dataAncestral1[k].NumT,
 			dataAncestral2[k].NumA, dataAncestral2[k].NumC, dataAncestral2[k].NumG, dataAncestral2[k].NumT,
 			dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT)
-	}
+	}*/
 	//Format so that SNPs are in order.
-	/*
-	var m map[int]string
-	var keys []int
-	for k := range m {
+
+	var keys []Key
+	for k := range dataFocal {
 	    keys = append(keys, k)
 	}
-	sort.Ints(keys)
+
+	sort.Slice(keys, func(i, j int) bool {
+	    if keys[i].Gene < keys[j].Gene {
+	        return true
+	    }
+	    if keys[i].Gene > keys[j].Gene {
+	        return false
+	    }
+	    return keys[i].Pos < keys[j].Pos
+	})
 	for _, k := range keys {
-	    fmt.Println("Key:", k, "Value:", m[k])
+		if dataFocal[k].Effect == variant {
+			fmt.Printf("%d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d gene[%s] pos[%d]\n",
+				dataFocal[k].NumA, dataFocal[k].NumC, dataFocal[k].NumG, dataFocal[k].NumT,
+				dataAncestral1[k].NumA, dataAncestral1[k].NumC, dataAncestral1[k].NumG, dataAncestral1[k].NumT,
+				dataAncestral2[k].NumA, dataAncestral2[k].NumC, dataAncestral2[k].NumG, dataAncestral2[k].NumT,
+				dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT,
+				k.Gene, k.Pos)
+			//fmt.Printf("gene[%s] pos[%d]\n", k.Gene, k.Pos)
+		}
 	}
-	*/
 }
