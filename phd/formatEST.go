@@ -51,35 +51,91 @@ func PopulateFocal(f *os.File, d Data) Data {
 
 		line := input.Text()
 		firstChar := strings.Split(line, "")[0]
+		entry := strings.Split(line, "\t")
+		var alt string
+		if (firstChar != "#"){
+			alt = entry[4]
+		}
 
-		if firstChar != "#" {
+		//the firstChar part is to make sure we work on lines that are not comments.
+		//the len part is to make sure there are less than 3 snp, no indels. Should do for now
+		if (firstChar != "#") && (len(alt) <= 5) {
 
 			//SNP part
 			snp := SNP{0,0,0,0,""} //initialize snp
 
-			entry := strings.Split(line, "\t")
 			ref := entry[3]
-			alt := entry[4]
 
 			//Possibility of two alternatives
 			altSplit := strings.Split(alt, ",")
 			//could have up to 3 alternative snps (eg. A,T,G with ref C)
 			//Only 1 for the moment
 			alt1 := ""
-			if len(altSplit) > 1 {
+			alt2 := ""
+			alt3 := ""
+			numAlt := len(altSplit)
+			switch numAlt {
+			case 1:
 				alt1 = altSplit[0]
-				//could do better
-				//alt2 := altSplit[1]
-			} else {
-				alt1 = alt
-				//alt2 := ""
+			case 2:
+				alt1 = altSplit[0]
+				alt2 = altSplit[1]
+			case 3:
+				alt1 = altSplit[0]
+				alt2 = altSplit[1]
+				alt3 = altSplit[2]
 			}
 
 			//Work on the assigning the snps
 			for i := 9; i <= (len(entry)-1); i++ {
 				//Note: Have not found any 1/0 nor 1/2 nor 0/1
 				polymorphism := strings.Split(entry[i], ":")[0]
+
 				if polymorphism == "0/0" {
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "1/1" {
+					switch alt1 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "2/2" {
+					switch alt2 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "3/3" {
+					switch alt3 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "0/1"{
 					switch ref {
 					case "A":
 							snp.NumA = snp.NumA + 1
@@ -90,8 +146,49 @@ func PopulateFocal(f *os.File, d Data) Data {
 					case "T":
 							snp.NumT = snp.NumT + 1
 					}
-				} else if polymorphism == "1/1" {
 					switch alt1 {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+				} else if polymorphism == "0/2"{
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+					switch alt2 {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+				} else if polymorphism == "0/3"{
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+					switch alt3 {
 					case "A":
 							snp.NumA = snp.NumA + 1
 					case "C":
@@ -105,14 +202,14 @@ func PopulateFocal(f *os.File, d Data) Data {
 			}
 
 			//Find the effect (synonymous, missense ...) of the snp
-			info := entry[7]
+			/*info := entry[7]
 			//fmt.Printf("%s", info)
 			annStr := strings.Split(info, ";")
 			ann := annStr[len(annStr)-1]
 			effect := strings.Split(ann, "|")[1] //OK effect is obtained
 			snp.Effect = effect
 			//fmt.Printf("%s", effect)
-
+			*/
 			//Key part
 			gene := entry[0]
 			pos, _ := strconv.Atoi(entry[1])
@@ -133,35 +230,91 @@ func PopulateAncestral(f *os.File, d Data) Data {
 
 		line := input.Text()
 		firstChar := strings.Split(line, "")[0]
+		entry := strings.Split(line, "\t")
+		var alt string
+		if (firstChar != "#"){
+			alt = entry[4]
+		}
 
-		if firstChar != "#" {
+		//the firstChar part is to make sure we work on lines that are not comments.
+		//the len part is to make sure there are less than 3 snp, no indels. Should do for now
+		if (firstChar != "#") && (len(alt) <= 5) {
 
 			//SNP part
 			snp := SNP{0,0,0,0,""} //initialize snp
 
-			entry := strings.Split(line, "\t")
 			ref := entry[3]
-			alt := entry[4]
 
 			//Possibility of two alternatives
 			altSplit := strings.Split(alt, ",")
 			//could have up to 3 alternative snps (eg. A,T,G with ref C)
 			//Only 1 for the moment
 			alt1 := ""
-			if len(altSplit) > 1 {
+			alt2 := ""
+			alt3 := ""
+			numAlt := len(altSplit)
+			switch numAlt {
+			case 1:
 				alt1 = altSplit[0]
-				//could do better
-				//alt2 := altSplit[1]
-			} else {
-				alt1 = alt
-				//alt2 := ""
+			case 2:
+				alt1 = altSplit[0]
+				alt2 = altSplit[1]
+			case 3:
+				alt1 = altSplit[0]
+				alt2 = altSplit[1]
+				alt3 = altSplit[2]
 			}
 
 			//Work on the assigning the snps
 			for i := 9; i <= (len(entry)-1); i++ {
 				//Note: Have not found any 1/0 nor 1/2 nor 0/1
 				polymorphism := strings.Split(entry[i], ":")[0]
+
 				if polymorphism == "0/0" {
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "1/1" {
+					switch alt1 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "2/2" {
+					switch alt2 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "3/3" {
+					switch alt3 {
+					case "A":
+							snp.NumA = snp.NumA + 2
+					case "C":
+							snp.NumC = snp.NumC + 2
+					case "G":
+							snp.NumG = snp.NumG + 2
+					case "T":
+							snp.NumT = snp.NumT + 2
+					}
+				} else if polymorphism == "0/1"{
 					switch ref {
 					case "A":
 							snp.NumA = snp.NumA + 1
@@ -172,8 +325,49 @@ func PopulateAncestral(f *os.File, d Data) Data {
 					case "T":
 							snp.NumT = snp.NumT + 1
 					}
-				} else if polymorphism == "1/1" {
 					switch alt1 {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+				} else if polymorphism == "0/2"{
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+					switch alt2 {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+				} else if polymorphism == "0/3"{
+					switch ref {
+					case "A":
+							snp.NumA = snp.NumA + 1
+					case "C":
+							snp.NumC = snp.NumC + 1
+					case "G":
+							snp.NumG = snp.NumG + 1
+					case "T":
+							snp.NumT = snp.NumT + 1
+					}
+					switch alt3 {
 					case "A":
 							snp.NumA = snp.NumA + 1
 					case "C":
@@ -230,14 +424,14 @@ func PopulateAncestral(f *os.File, d Data) Data {
 			}
 
 			//Find the effect (synonymous, missense ...) of the snp
-			info := entry[7]
+			/*info := entry[7]
 			//fmt.Printf("%s", info)
 			annStr := strings.Split(info, ";")
 			ann := annStr[len(annStr)-1]
 			effect := strings.Split(ann, "|")[1] //OK effect is obtained
 			snp.Effect = effect
 			//fmt.Printf("%s", effect)
-
+			*/
 			//Key part
 			gene := entry[0]
 			pos, _ := strconv.Atoi(entry[1])
@@ -280,12 +474,12 @@ func PopulateReference(f *os.File, d Data) Data {
 			}
 
 			//Find the effect (synonymous, missense ...) of the snp
-			info := entry[7]
+			//info := entry[7]
 			//fmt.Printf("%s", info)
-			annStr := strings.Split(info, ";")
-			ann := annStr[len(annStr)-1]
-			effect := strings.Split(ann, "|")[1] //OK effect is obtained
-			snp.Effect = effect
+			//annStr := strings.Split(info, ";")
+			//ann := annStr[len(annStr)-1]
+			//effect := strings.Split(ann, "|")[1] //OK effect is obtained
+			//snp.Effect = effect
 			//fmt.Printf("%s", effect)
 
 			//Key part
@@ -307,9 +501,11 @@ func main() {
 	a1Ptr := flag.String("a1", "nothing", "file containing outgroup 1 SNPs; all data for that outgroup must be present")
 	a2Ptr := flag.String("a2", "nothing", "file containing outgroup 2 SNPs; all data for that outgroup must be present")
 	a3Ptr := flag.String("a3", "nothing", "file containing outgroup 3 SNPs; all data must be present")
-	typePtr := flag.String("type", "synonymous_variant", "what type of SNP are you interested in? (eg. missense_variant)")
-	variant := *typePtr
+	//typePtr := flag.String("type", "synonymous_variant", "what type of SNP are you interested in? (eg. missense_variant)")
+	//Parse the flags before doing anything!!!
 	flag.Parse()
+
+	//variant := *typePtr
 
 	fileFocal, _ := os.Open(*fPtr) // focal allele
 	fileAncestral1, _ := os.Open(*a1Ptr) // ancestral 1 allele
@@ -361,7 +557,7 @@ func main() {
 	    return keys[i].Pos < keys[j].Pos
 	})
 	for _, k := range keys {
-		if dataFocal[k].Effect == variant {
+		//if dataFocal[k].Effect == variant {
 			fmt.Printf("%d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d %d,%d,%d,%d \n",
 				dataFocal[k].NumA, dataFocal[k].NumC, dataFocal[k].NumG, dataFocal[k].NumT,
 				dataAncestral1[k].NumA, dataAncestral1[k].NumC, dataAncestral1[k].NumG, dataAncestral1[k].NumT,
@@ -369,6 +565,6 @@ func main() {
 				dataAncestralRef[k].NumA, dataAncestralRef[k].NumC, dataAncestralRef[k].NumG, dataAncestralRef[k].NumT)
 				//k.Gene, k.Pos)
 			//fmt.Printf("gene[%s] pos[%d]\n", k.Gene, k.Pos)
-		}
+		//}
 	}
 }
