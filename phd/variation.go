@@ -238,7 +238,7 @@ func (g Gene) CalculateThetaPi() float64 {
 	for _, p := range g.S {
 		ThetaPi += p.H
 	}
-	fmt.Printf("ThetaPi[%f]\n", ThetaPi)
+	//fmt.Printf("ThetaPi[%f]\n", ThetaPi)
 	return ThetaPi
 }
 
@@ -246,13 +246,13 @@ func (g Gene) CalculateThetaW() float64 {
 	ThetaW := 0.0
 	S := len(g.S)
 	n := g.S[0].NumVar
-	fmt.Printf("S[%d]\n", S)
+	//fmt.Printf("S[%d]\n", S)
 	a := 0.0
 	for i := 1; i < n; i++ {
 		a += 1.0/float64(i)
 	}
 	ThetaW = float64(S)/a
-	fmt.Printf("ThetaW[%f]\n", ThetaW)
+	//fmt.Printf("ThetaW[%f]\n", ThetaW)
 	return ThetaW
 }
 
@@ -274,7 +274,7 @@ func (g Gene) CalculateTajimaD() float64 {
 	a22 := math.Pow(a, 2)
 	TajVar = ((n+1)/(3*(n-1))-1/a)*S + ((2*(n2+n+3)/9*n*(n-1) - (n+2)/n*a + a2/a22)/(a2+a22))*S*(S-1)
 	TajimaD = (TPi-TW)/TajVar
-	fmt.Printf("TajimaD[%f]\n", TajimaD)
+	//fmt.Printf("TajimaD[%f]\n", TajimaD)
 	return TajimaD
 }
 
@@ -301,7 +301,7 @@ func main() {
 	}
 
   for _, g := range dataGenes {
-			fmt.Printf("gene[%s] ThetaPi[%f] ThetaW[%f] TajimaD[%f]\n", g.Name, g.ThetaPi, g.ThetaW, g.TajimaD)
+			fmt.Printf("gene[%s] n_snp[%d] ThetaPi[%f] ThetaW[%f] TajimaD[%f]\n", g.Name, len(g.S), g.ThetaPi, g.ThetaW, g.TajimaD)
 
   }
 }
