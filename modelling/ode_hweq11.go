@@ -114,7 +114,7 @@ func main() {
 
 	plt.Subplot(3, 1, 1)
 	//plt.Plot(xx, yy, &plt.A{C: "grey", Ls: "-", Lw: 5, L: "analytical", NoClip: true})
-	plt.Plot(out1.GetStepY(0), out1.GetStepY(1), &plt.A{L: "phase-space", C: "k", M: ".", Ls: ":"})
+	plt.Plot(out1.GetStepY(0), out1.GetStepY(1), &plt.A{L: "phase-space", C: "k", Ls: "-"})
 	//plt.Plot(out2.GetStepY(0), out2.GetStepY(1), &plt.A{L: "bweuler", C: "r", M: ".", Ls: "--"})
 	plt.Gll("$prey$", "$predator$", nil)
 
@@ -126,8 +126,8 @@ func main() {
   */
 	plt.Subplot(3, 1, 2)
 	//plt.Plot(xx, yy, &plt.A{C: "grey", Ls: "-", Lw: 5, L: "analytical", NoClip: true})
-	plt.Plot(out1.GetStepX(), out1.GetStepY(0), &plt.A{L: "prey", C: "k", M: ".", Ls: ":"})
-	plt.Plot(out1.GetStepX(), out1.GetStepY(1), &plt.A{L: "predator", C: "r", M: ".", Ls: "-", Void: true})
+	plt.Plot(out1.GetStepX(), out1.GetStepY(0), &plt.A{L: "prey", C: "k", Ls: "-"})
+	plt.Plot(out1.GetStepX(), out1.GetStepY(1), &plt.A{L: "predator", C: "r", Ls: "-", Void: true})
 	plt.Gll("$time$", "$number$", nil)
 
 	plt.Save("/tmp/gosl", "ode_hweq11")
