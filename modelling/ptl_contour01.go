@@ -32,7 +32,7 @@ func main() {
 
 	// plot
 	plt.Reset(false, nil)
-	plt.ContourF(X, Y, F, &plt.A{CmapIdx: 4, Nlevels: 15})
+	plt.ContourF(X, Y, F, &plt.A{CmapIdx: 4, Nlevels: 8})
 	plt.Quiver(X, Y, U, V, &plt.A{C: "r"})
 	plt.Gll("x", "y", nil)
 	plt.Equal()
