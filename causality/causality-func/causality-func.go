@@ -24,13 +24,6 @@ import (
 */
 
 type F func(out chan<- float64, in <-chan float64)
-type Node struct {
-	input    chan float64
-	output   chan float64
-	parents  *Node // note that this is now a pointer
-	children *Node // note that this is now a pointer
-	function F
-}
 
 /*
 	 ######   #######  ##     ## ##    ## ######## ######## ########
