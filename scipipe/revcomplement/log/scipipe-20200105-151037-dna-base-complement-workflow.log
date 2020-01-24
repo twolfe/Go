@@ -1,0 +1,8 @@
+AUDIT   2020/01/05 15:10:37 | workflow:DNA Base Complement Workflow | Starting workflow (Writing log to log/scipipe-20200105-151037-dna-base-complement-workflow.log)
+AUDIT   2020/01/05 15:10:37 | Make DNA                         | Executing: echo AAAGCCCGTGGGGGACCTGTTC > dna.txt
+AUDIT   2020/01/05 15:10:37 | Make DNA                         | Finished: echo AAAGCCCGTGGGGGACCTGTTC > dna.txt
+AUDIT   2020/01/05 15:10:37 | Base Complement                  | Executing: cat ../dna.txt | tr ATCG TAGC > dna.compl.txt
+AUDIT   2020/01/05 15:10:37 | Base Complement                  | Finished: cat ../dna.txt | tr ATCG TAGC > dna.compl.txt
+AUDIT   2020/01/05 15:10:37 | Reverse                          | Executing: cat ../dna.compl.txt | rev > dna.compl.rev.txt
+AUDIT   2020/01/05 15:10:37 | Reverse                          | Finished: cat ../dna.compl.txt | rev > dna.compl.rev.txt
+AUDIT   2020/01/05 15:10:37 | workflow:DNA Base Complement Workflow | Finished workflow (Log written to log/scipipe-20200105-151037-dna-base-complement-workflow.log)

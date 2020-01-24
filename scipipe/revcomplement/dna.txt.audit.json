@@ -1,0 +1,14 @@
+{
+    "ID": "ez31437bbl4a618tmfcj",
+    "ProcessName": "Make DNA",
+    "Command": "echo AAAGCCCGTGGGGGACCTGTTC \u003e dna.txt",
+    "Params": {},
+    "Tags": {},
+    "StartTime": "2020-01-05T15:10:37.602775773+01:00",
+    "FinishTime": "2020-01-05T15:10:37.605249328+01:00",
+    "ExecTimeNS": 2473547,
+    "OutFiles": {
+        "dna": "dna.txt"
+    },
+    "Upstream": {}
+}

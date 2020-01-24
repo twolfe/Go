@@ -1,0 +1,6 @@
+AUDIT   2020/01/05 14:35:57 | workflow:hello_world             | Starting workflow (Writing log to log/scipipe-20200105-143557-hello_world.log)
+AUDIT   2020/01/05 14:35:57 | hello                            | Executing: echo 'Hello ' > hello.out
+AUDIT   2020/01/05 14:35:57 | hello                            | Finished: echo 'Hello ' > hello.out
+AUDIT   2020/01/05 14:35:57 | world                            | Executing: echo $(cat ../hello.out) World >> hello.out.world.out
+AUDIT   2020/01/05 14:35:57 | world                            | Finished: echo $(cat ../hello.out) World >> hello.out.world.out
+AUDIT   2020/01/05 14:35:57 | workflow:hello_world             | Finished workflow (Log written to log/scipipe-20200105-143557-hello_world.log)

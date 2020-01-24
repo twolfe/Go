@@ -1,0 +1,4 @@
+AUDIT   2020/01/05 15:03:04 | workflow:fifowf                  | Starting workflow (Writing log to log/scipipe-20200105-150304-fifowf.log)
+AUDIT   2020/01/05 15:03:04 | grp                              | Executing: grep etc ../lsl.txt.fifo > lsl.txt.grepped.txt
+AUDIT   2020/01/05 15:03:04 | lsl                              | Executing: ls -l / > lsl.txt.fifo
+AUDIT   2020/01/05 15:03:04 | lsl                              | Finished: ls -l / > lsl.txt.fifo

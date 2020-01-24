@@ -1,0 +1,4 @@
+ERROR   2020/01/05 14:43:50 Could not execute command `dot -Tpdf hello_world.dot -o hello_world.dot.pdf`: Warning: Could not load "/home/thomas/anaconda3/lib/graphviz/libgvplugin_pango.so.6" - file not found
+Warning: Could not load "/home/thomas/anaconda3/lib/graphviz/libgvplugin_pango.so.6" - file not found
+Format: "pdf" not recognized. Use one of: bmp canon cmap cmapx cmapx_np dot eps fig gv ico imap imap_np ismap jpe jpeg jpg pdf pic plain plain-ext png pov ps ps2 svg svgz tif tiff tk vml vmlz xdot xdot1.2 xdot1.4
+

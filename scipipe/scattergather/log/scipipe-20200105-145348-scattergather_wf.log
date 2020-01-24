@@ -1,0 +1,13 @@
+AUDIT   2020/01/05 14:53:48 | workflow:scattergather_wf        | Starting workflow (Writing log to log/scipipe-20200105-145348-scattergather_wf.log)
+WARNING 2020/01/05 14:53:48 OpenWriteTemp() is deprecated - You should stop using it!
+AUDIT   2020/01/05 14:53:48 | wget                             | Executing: wget ftp://ftp.ensembl.org/pub/release-84/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.Y.fa.gz -O chry.fa.gz
+WARNING 2020/01/05 14:53:48 OpenWriteTemp() is deprecated - You should stop using it!
+ERROR   2020/01/05 14:53:48 Command failed!
+Command:
+wget ftp://ftp.ensembl.org/pub/release-84/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.Y.fa.gz -O chry.fa.gz
+
+Output:
+wget: symbol lookup error: wget: undefined symbol: SSLv2_client_method
+
+Original error:exit status 127
+

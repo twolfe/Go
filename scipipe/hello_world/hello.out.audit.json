@@ -1,0 +1,14 @@
+{
+    "ID": "az3y7tuzyytu2os228ry",
+    "ProcessName": "hello",
+    "Command": "echo 'Hello ' \u003e hello.out",
+    "Params": {},
+    "Tags": {},
+    "StartTime": "2020-01-05T14:35:57.288518813+01:00",
+    "FinishTime": "2020-01-05T14:35:57.298446285+01:00",
+    "ExecTimeNS": 9927523,
+    "OutFiles": {
+        "out": "hello.out"
+    },
+    "Upstream": {}
+}

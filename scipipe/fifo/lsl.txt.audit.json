@@ -1,0 +1,14 @@
+{
+    "ID": "ku6e1tll3i07c1s16gkz",
+    "ProcessName": "lsl",
+    "Command": "ls -l / \u003e lsl.txt.fifo",
+    "Params": {},
+    "Tags": {},
+    "StartTime": "2020-01-05T15:03:04.93818844+01:00",
+    "FinishTime": "2020-01-05T15:03:04.946299108+01:00",
+    "ExecTimeNS": 8110663,
+    "OutFiles": {
+        "lsl": "lsl.txt"
+    },
+    "Upstream": {}
+}

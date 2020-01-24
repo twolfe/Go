@@ -1,0 +1,29 @@
+{
+    "ID": "c1ebu4eexa85q07vo8hy",
+    "ProcessName": "Base Complement",
+    "Command": "cat ../dna.txt | tr ATCG TAGC \u003e dna.compl.txt",
+    "Params": {},
+    "Tags": {},
+    "StartTime": "2020-01-05T15:10:37.606076029+01:00",
+    "FinishTime": "2020-01-05T15:10:37.610864174+01:00",
+    "ExecTimeNS": 4788104,
+    "OutFiles": {
+        "compl": "dna.compl.txt"
+    },
+    "Upstream": {
+        "dna.txt": {
+            "ID": "ez31437bbl4a618tmfcj",
+            "ProcessName": "Make DNA",
+            "Command": "echo AAAGCCCGTGGGGGACCTGTTC \u003e dna.txt",
+            "Params": {},
+            "Tags": {},
+            "StartTime": "2020-01-05T15:10:37.602775773+01:00",
+            "FinishTime": "2020-01-05T15:10:37.605249328+01:00",
+            "ExecTimeNS": 2473547,
+            "OutFiles": {
+                "dna": "dna.txt"
+            },
+            "Upstream": {}
+        }
+    }
+}

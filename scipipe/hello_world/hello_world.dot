@@ -1,0 +1,9 @@
+digraph "hello_world" {
+  rankdir=LR;
+  graph [fontname="Arial",fontsize=13,color="#384A52",fontcolor="#384A52"];
+  node  [fontname="Arial",fontsize=11,color="#384A52",fontcolor="#384A52",fillcolor="#EFF2F5",shape=box,style=filled];
+  edge  [fontname="Arial",fontsize=9, color="#384A52",fontcolor="#384A52"];
+  "hello" [shape=box];
+  "world" [shape=box];
+  "hello" -> "world" [taillabel="out", headlabel="in"];
+}
