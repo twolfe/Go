@@ -9,8 +9,10 @@ package main
 
 import (
 	"fmt"
-
+	//"os"
+	//"runtime/trace"
 	"gonum.org/v1/gonum/stat/distuv"
+	"math"
 )
 
 /*
@@ -144,11 +146,14 @@ func printer(in <-chan float64) {
 */
 
 func main() {
+	//trace.Start(os.Stderr)
+	quit := make(chan bool)
+	//in1 := make(chan float64)
 	in := make(chan float64)
-	//naturals2 := make(chan float64)
 	out1 := make(chan float64)
+	//out12 := make(chan float64)
 	out2 := make(chan float64)
-	out3 := make(chan float64)
+	//out3 := make(chan float64)
 	out4 := make(chan float64)
 	//squares2 := make(chan float64)
 	//quads := make(chan float64)
@@ -161,57 +166,74 @@ func main() {
 		 chans[i] = make(ch)
 	}*/
 	//var n1 F
-	n1 := func(out chan<- float64, in <-chan float64) {
+	n1 := func(out chan<- float64, in <-chan float64, q chan bool) {
 		dist := distuv.Normal{
-			Mu:    9,
+			Mu:    1,
 			Sigma: 1,
 			//Rate: 0.01,
 		}
-		for x := 0; x <= 100; x++ {
+		for x := 0; x <= 200000; x++ {
 			out <- dist.Rand()
 		}
 		close(out)
+		q <- true
 	}
 
 	n2 := func(out chan<- float64, in <-chan float64) {
+		/*dist := distuv.Normal{
+			Mu:    0.1,
+			Sigma: 0.1,
+		}*/
+		for v := range in {
+			out <- 30*v/v//3*v + dist.Rand()
+		}
+		close(out)
+	}
+
+	/*n3 := func(out chan<- float64, in <-chan float64) {
 		dist := distuv.Normal{
-			Mu:    1,
-			Sigma: 1,
+			Mu:    0.1,
+			Sigma: 0.1,
 		}
 		for v := range in {
 			out <- v + dist.Rand()
 		}
 		close(out)
-	}
+	}*/
 
-	n3 := func(out chan<- float64, in <-chan float64) {
+	n4 := func(out chan<- float64, in1 <-chan float64, in2 <-chan float64, q chan bool) {
 		dist := distuv.Normal{
-			Mu:    1,
-			Sigma: 1,
+			Mu:    0.1,
+			Sigma: 0.1,
 		}
-		for v := range in {
-			out <- v + dist.Rand()
-		}
-		close(out)
-	}
+		//for v1, v2 := range in1, in2, {
+		//		out <- v1/v2 + dist.Rand(),
+			//close(out)
+		//}
 
-	n4 := func(out chan<- float64, in1 <-chan float64, in2 <-chan float64) {
-		dist := distuv.Normal{
-			Mu:    1,
-			Sigma: 1,
-		}
-		for v1 := range in1 {
-			for v2 := range in2 {
-				out <- v1/v2 + dist.Rand()
+		for {
+		      v := 0.0
+		      select {
+		      case <-in1:
+						v = <-in2*math.Cos(<-in1) + dist.Rand()
+
+		      case <-in2:
+		        v = <-in2*math.Cos(<-in1) + dist.Rand()
+					//default:
+					case <- q:
+						close(out)
+						return
+
+		      }
+		      out <- v// + dist.Rand()
+		    }
 			}
-			close(out)
-		}
-	}
 
-	go n1(out1, in)
+	go n1(out1, in, quit)
+	//go n1(out1, in, quit)
 	go n2(out2, out1)
-	go n3(out3, out1)
-	go n4(out4, out2, out3)
+	//go n3(out3, out1)
+	go n4(out4, out2, out1, quit)
 	//go counter(in)
 	//go counter(naturals2)
 	//go squarer1(squares1, naturals1)
@@ -219,5 +241,6 @@ func main() {
 	//go quad(quads, squares1, squares2)
 	//v := node.function
 	//fmt.Println(v)
-	printer(out4)
+	printer(out2)
+	//trace.Stop()
 }
